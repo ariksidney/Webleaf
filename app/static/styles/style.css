@@ -1,0 +1,32 @@
+.rangeslider--horizontal {
+    height: 6px;
+}
+
+.rangeslider, .rangeslider__fill {
+    box-shadow: unset;
+}
+
+.rangeslider__fill {
+    background: #60cd18;
+}
+
+.rangeslider__handle {
+    top: 50%;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    margin-top: -1px;
+    background: white;
+    position: absolute;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.rangeslider__handle::after {
+    background: #565656;
+    background-image: none;
+}
+
+.pad {
+    margin-bottom: 20px;
+}
