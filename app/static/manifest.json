@@ -8,7 +8,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": "/auth/login?next=%2F",
+  "start_url": "/",
   "display": "standalone",
   "orientation": "portrait"
 }
