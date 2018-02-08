@@ -1,0 +1,8 @@
+{
+  "name": "Webleaf",
+  "theme_color": "black",
+  "icons": [],
+  "start_url": "index.html",
+  "display": "standalone",
+  "orientation": "portrait"
+}
