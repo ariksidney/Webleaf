@@ -8,6 +8,7 @@ from .forms import AddAuroraForm
 from ..models import AuroraConfig, User
 from . import aurora
 from .. import db
+import ast
 
 rest = RestHandler()
 
@@ -58,10 +59,11 @@ def aurora_off(ip_address, port, token):
     return '', 204
 
 
-@aurora.route('/set-effect/<ip_address>&<port>&<token>&<effect>',  methods=['GET', 'POST'])
+@aurora.route('/set-effect/<aurora_effect>',  methods=['GET', 'POST'])
 @login_required
-def set_effect(ip_address, port, token, effect):
-    rest.set_effect(ip_address, port, token, effect)
+def set_effect(aurora_effect):
+    aurora_effect = ast.literal_eval(aurora_effect)
+    rest.set_effect(aurora_effect[0], aurora_effect[1], aurora_effect[2], aurora_effect[3])
     return redirect(url_for(".aurora_overview"))
 
 

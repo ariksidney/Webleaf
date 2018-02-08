@@ -36,7 +36,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                     {% for effect in aurora.effects %}
                                         <li>
-                                            <a href="{{ url_for('.set_effect', ip_address=aurora.ip_address, port=aurora.port, token=aurora.token, effect=effect) }}">{{ effect }}</a>
+                                            <a href="{{ url_for('.set_effect', aurora_effect=[aurora.ip_address, aurora.port,aurora.token, effect]) }}">{{ effect }}</a>
                                         </li>
                                     {% endfor %}
                                 </ul>
