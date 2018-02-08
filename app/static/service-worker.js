@@ -3,7 +3,7 @@ const filesToCache = [
     '/',
     '/static/app.js',
     '/static/styles/style.css',
-    '/offline.html'
+    '/static/offline.html'
 ];
 
 self.addEventListener('install', function(e) {

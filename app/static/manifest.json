@@ -1,8 +1,14 @@
 {
   "name": "Webleaf",
   "theme_color": "black",
-  "icons": [],
-  "start_url": "index.html",
+  "icons": [
+    {
+      "src": "/static/img/webleafDummy144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/auth/login?next=%2F",
   "display": "standalone",
   "orientation": "portrait"
 }
