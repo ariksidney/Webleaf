@@ -5,7 +5,6 @@
 
     <div class="page-header">
         <h1>Your Auroras</h1>
-        <a href="{{ url_for('aurora.add_aurora') }}" class="btn btn-default">Add</a>
     </div>
 
     {% for aurora in auroras %}
@@ -14,7 +13,7 @@
             <div class="panel-heading">{{ aurora.name }} ({{ status }})</div>
             <div class="panel-body">
                 <div class="row pad">
-                    <div class="col-md-2 col-xs-12">
+                    <div class="col-md-3 col-xs-12">
                         <div class="btn-group" role="group" aria-label="..." style="width: 100%">
                             <a class="btn btn-primary" style="width: 50%"
                                href="{{ url_for('.aurora_on', ip_address=aurora.ip_address, port=aurora.port, token=aurora.token) }}">On</a>
@@ -25,7 +24,7 @@
                 </div>
 
                 <div class="row pad">
-                    <div class="col-md-2 col-xs-12">
+                    <div class="col-md-3 col-xs-12">
                         <div class="dropdown">
                             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
@@ -78,6 +77,8 @@
             </div>
         </div>
     {% endfor %}
+
+    <a href="{{ url_for('aurora.add_aurora') }}" class="btn btn-default">Add</a>
 
 {% endblock %}
 
