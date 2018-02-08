@@ -13,51 +13,66 @@
         <div class="panel panel-default">
             <div class="panel-heading">{{ aurora.name }} ({{ status }})</div>
             <div class="panel-body">
-                <div class="container">
-                    <div class="row pad">
-                        <div class="col-md-12">
-                            <div class="btn-group" role="group" aria-label="...">
-                                <a class="btn btn-default"
-                                   href="{{ url_for('.aurora_on', ip_address=aurora.ip_address, port=aurora.port, token=aurora.token) }}">On</a>
-                                <a class="btn btn-default"
-                                   href="{{ url_for('.aurora_off', ip_address=aurora.ip_address, port=aurora.port, token=aurora.token) }}">Off</a>
-                            </div>
+                <div class="row pad">
+                    <div class="col-md-2 col-xs-12">
+                        <div class="btn-group" role="group" aria-label="..." style="width: 100%">
+                            <a class="btn btn-primary" style="width: 50%"
+                               href="{{ url_for('.aurora_on', ip_address=aurora.ip_address, port=aurora.port, token=aurora.token) }}">On</a>
+                            <a class="btn btn-warning" style="width: 50%"
+                               href="{{ url_for('.aurora_off', ip_address=aurora.ip_address, port=aurora.port, token=aurora.token) }}">Off</a>
                         </div>
                     </div>
+                </div>
 
-                    <div class="row pad">
-                        <div class="col-md-12">
-                            <div class="dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    {{ aurora.selected_effect }}
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    {% for effect in aurora.effects %}
-                                        <li>
-                                            <a href="{{ url_for('.set_effect', aurora_effect=[aurora.ip_address, aurora.port,aurora.token, effect]) }}">{{ effect }}</a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
+                <div class="row pad">
+                    <div class="col-md-2 col-xs-12">
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
+                                    style="width: 100%">
+                                {{ aurora.selected_effect }}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                {% for effect in aurora.effects %}
+                                    <li>
+                                        <a href="{{ url_for('.set_effect', aurora_effect=[aurora.ip_address, aurora.port,aurora.token, effect]) }}">{{ effect }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
                         </div>
                     </div>
+                </div>
 
 
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input
-                                    type="range"
-                                    min="1"
-                                    max="100"
-                                    step="1"
-                                    value="{{ aurora.brightness }}"
-                                    id="{{ aurora.ip_address }}"
-                                    data-token="{{ aurora.token }}"
-                                    data-port="{{ aurora.port }}"
-                            >
-                        </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <h4>Brightness</h4>
+                        <input
+                                type="range"
+                                min="1"
+                                max="100"
+                                step="1"
+                                value="{{ aurora.brightness }}"
+                                id="{{ aurora.ip_address }}"
+                                data-token="{{ aurora.token }}"
+                                data-port="{{ aurora.port }}"
+                                data-type="brightness"
+                        >
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <h4>Color Temperature</h4>
+                        <input
+                                type="range"
+                                min="1200"
+                                max="6500"
+                                step="100"
+                                value="{{ aurora.color_temp }}"
+                                id="{{ aurora.ip_address }}"
+                                data-token="{{ aurora.token }}"
+                                data-port="{{ aurora.port }}"
+                                data-type="wb"
+                        >
                     </div>
                 </div>
             </div>
@@ -74,19 +89,36 @@
 
             $(sliders).each(function () {
                 var _this = $(this);
-                _this.rangeslider({
-                    polyfill: false,
-                    onSlideEnd: function (position, value) {
-                        $.post("{{ url_for('.set_brightness') }}",
-                            {
-                                ip_address: _this.attr('id'),
-                                token: _this.data('token'),
-                                port: _this.data('port'),
-                                brightness: value
-                            }
-                        )
-                    }
-                });
+                if (_this.data('type') === 'wb') {
+                    _this.rangeslider({
+                        polyfill: false,
+                        fillClass: 'rangeslider__fill rangeslider__fill-ct',
+                        onSlideEnd: function (position, value) {
+                            $.post("{{ url_for('.set_color_temp') }}",
+                                {
+                                    ip_address: _this.attr('id'),
+                                    token: _this.data('token'),
+                                    port: _this.data('port'),
+                                    ct: value
+                                });
+                        }
+                    });
+                } else {
+                    _this.rangeslider({
+                        polyfill: false,
+                        fillClass: 'rangeslider__fill rangeslider__fill-brightness',
+                        onSlideEnd: function (position, value) {
+                            $.post("{{ url_for('.set_brightness') }}",
+                                {
+                                    ip_address: _this.attr('id'),
+                                    token: _this.data('token'),
+                                    port: _this.data('port'),
+                                    brightness: value
+                                });
+                        }
+                    })
+                    ;
+                }
             });
         });
     </script>

@@ -6,8 +6,13 @@
     box-shadow: unset;
 }
 
-.rangeslider__fill {
-    background: #60cd18;
+.rangeslider__fill-brightness {
+    background: linear-gradient(to right, #a8a7a6, #fff7bd) fixed;
+}
+
+
+.rangeslider__fill-ct {
+    background: linear-gradient(to right, #ff8c23, #f9fbff) fixed;
 }
 
 .rangeslider__handle {

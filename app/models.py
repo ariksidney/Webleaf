@@ -88,3 +88,11 @@ class AuroraConfig(db.Model):
     @brightness.setter
     def brightness(self, brightness):
         self._brightness = brightness
+
+    @hybrid_property
+    def color_temp(self):
+        return self._ct
+
+    @color_temp.setter
+    def color_temp(self, ct):
+        self._ct = ct

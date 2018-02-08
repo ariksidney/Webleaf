@@ -24,6 +24,7 @@ def aurora_overview():
             aurora_obj.selected_effect = rest.get_selected_effect(aurora_obj.ip_address, aurora_obj.port,
                                                                   aurora_obj.token)
             aurora_obj.brightness = rest.get_brightness(aurora_obj.ip_address, aurora_obj.port, aurora_obj.token)
+            aurora_obj.color_temp = rest.get_color_temp(aurora_obj.ip_address, aurora_obj.port, aurora_obj.token)
     return render_template('aurora/overview.html', auroras=auroras)
 
 
@@ -73,4 +74,12 @@ def set_effect(aurora_effect):
 def set_brightness():
     rest.set_brightness(request.form['ip_address'], request.form['port'], request.form['token'],
                         request.form['brightness'])
+    return redirect(url_for(".aurora_overview")), 204
+
+
+@aurora.route('/set-ct', methods=['POST'])
+@login_required
+def set_color_temp():
+    rest.set_color_temp(request.form['ip_address'], request.form['port'], request.form['token'],
+                        request.form['ct'])
     return redirect(url_for(".aurora_overview")), 204

@@ -49,4 +49,12 @@ class RestHandler:
 
     def set_brightness(self, ip, port, token, brightness):
         url = 'http://{}:{}{}/{}/state'.format(ip, port, self.endpoint, token)
-        res = requests.put(url, data=json.dumps({"brightness" : {"value": int(brightness)}}))
+        res = requests.put(url, data=json.dumps({"brightness": {"value": int(brightness)}}))
+
+    def get_color_temp(self, ip, port, token):
+        url = 'http://{}:{}{}/{}/state/ct'.format(ip, port, self.endpoint, token)
+        return requests.get(url).json().get('value')
+
+    def set_color_temp(self, ip, port, token, ct):
+        url = 'http://{}:{}{}/{}/state'.format(ip, port, self.endpoint, token)
+        res = requests.put(url, data=json.dumps({"ct": {"value": int(ct)}}))
