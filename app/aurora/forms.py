@@ -1,7 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, ValidationError, IntegerField
-from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo
-from ..models import User
+from wtforms import StringField, SubmitField, IntegerField
+from wtforms.validators import DataRequired, Length
 
 
 class AddAuroraForm(FlaskForm):

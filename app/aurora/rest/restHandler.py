@@ -50,5 +50,3 @@ class RestHandler:
     def set_brightness(self, ip, port, token, brightness):
         url = 'http://{}:{}{}/{}/state'.format(ip, port, self.endpoint, token)
         res = requests.put(url, data=json.dumps({"brightness" : {"value": int(brightness)}}))
-        print(res.status_code)
-

@@ -5,7 +5,7 @@ from flask import render_template, redirect, request, url_for, flash
 
 from .rest.restHandler import RestHandler
 from .forms import AddAuroraForm
-from ..models import AuroraConfig, User
+from ..models import AuroraConfig
 from . import aurora
 from .. import db
 import ast
@@ -21,7 +21,8 @@ def aurora_overview():
         aurora_obj.status = rest.get_status(aurora_obj.ip_address, aurora_obj.port, aurora_obj.token)
         if aurora_obj.status != 'Unknown':
             aurora_obj.effects = rest.get_all_effects(aurora_obj.ip_address, aurora_obj.port, aurora_obj.token)
-            aurora_obj.selected_effect = rest.get_selected_effect(aurora_obj.ip_address, aurora_obj.port, aurora_obj.token)
+            aurora_obj.selected_effect = rest.get_selected_effect(aurora_obj.ip_address, aurora_obj.port,
+                                                                  aurora_obj.token)
             aurora_obj.brightness = rest.get_brightness(aurora_obj.ip_address, aurora_obj.port, aurora_obj.token)
     return render_template('aurora/overview.html', auroras=auroras)
 
@@ -45,21 +46,21 @@ def add_aurora():
     return render_template('aurora/add.html', form=form)
 
 
-@aurora.route('/turn-on/<ip_address>&<port>&<token>',  methods=['GET', 'POST'])
+@aurora.route('/turn-on/<ip_address>&<port>&<token>', methods=['GET', 'POST'])
 @login_required
 def aurora_on(ip_address, port, token):
     rest.turn_on(ip_address, port, token)
     return '', 204
 
 
-@aurora.route('/turn-off/<ip_address>&<port>&<token>',  methods=['GET', 'POST'])
+@aurora.route('/turn-off/<ip_address>&<port>&<token>', methods=['GET', 'POST'])
 @login_required
 def aurora_off(ip_address, port, token):
     rest.turn_off(ip_address, port, token)
     return '', 204
 
 
-@aurora.route('/set-effect/<aurora_effect>',  methods=['GET', 'POST'])
+@aurora.route('/set-effect/<aurora_effect>', methods=['GET', 'POST'])
 @login_required
 def set_effect(aurora_effect):
     aurora_effect = ast.literal_eval(aurora_effect)
@@ -67,8 +68,9 @@ def set_effect(aurora_effect):
     return redirect(url_for(".aurora_overview"))
 
 
-@aurora.route('/set-brightness',  methods=['POST'])
+@aurora.route('/set-brightness', methods=['POST'])
 @login_required
 def set_brightness():
-    rest.set_brightness(request.form['ip_address'], request.form['port'], request.form['token'], request.form['brightness'])
+    rest.set_brightness(request.form['ip_address'], request.form['port'], request.form['token'],
+                        request.form['brightness'])
     return redirect(url_for(".aurora_overview")), 204
