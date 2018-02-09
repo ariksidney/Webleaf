@@ -1,5 +1,12 @@
 {% extends "bootstrap/base.html" %}
 
+
+{% block head %}
+    {{ super() }}
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}" />
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+{% endblock %}
+
 {% block styles %}
     {{ super() }}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.2/rangeslider.min.css">
