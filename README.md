@@ -1,7 +1,13 @@
 # Webleaf
 A Nanoleaf Aurora WebApp
 
-It's neither very stable nor very secure at the moment, but it kinda works.
+It's neither very stable nor very secure at the moment, but it kinda works :-)
+
+## Features
+
+* Control one or multiple Auroras
+* Change effect, brightness and white balance
+* Support for multiple users with different Auroras
 
 ## Guide
 
